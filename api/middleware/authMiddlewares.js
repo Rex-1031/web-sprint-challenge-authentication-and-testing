@@ -17,12 +17,33 @@ const checkPayload = (req, res, next)=>{
     }
 }
 
+//checks for usernames that exist and fails reqistration if true
 const checkUsername = async (req, res, next) =>{
-
+    try{
+    const userExisits = await Users.findUser(req.body.username)
+    if(!userExisits.length){
+        next()
+    }else{
+        next({status: 401, message: 'username taken'})
+    }
+    }catch(err){
+        next(err)
+    }
+    
 }
 
-const checkLogin =(req, res, next) =>{
-
+const checkLogin = async (req, res, next) =>{
+    try{
+        const user = await Users.findUser(req.body.username)
+        const password = await Users.pwValidation(req.body.password)
+        if (!user || !password){
+            next({ status: 400, message: 'invalid credentials' })
+        } else{
+            next()
+        }
+    }catch(err){
+        next(err)
+    }
 }
 
 
