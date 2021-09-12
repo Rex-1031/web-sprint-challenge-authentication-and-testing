@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-const { jwtSecret } = require('../../config/secrets')
+const { jwtSecrets } = require('../../config/secrets')
 
 module.exports = function(user){
     const payload = {
@@ -9,5 +9,5 @@ module.exports = function(user){
     const options = {
         expiresIn: '1d',
     }
-    return jwt.sign(payload, jwtSecret, options)
+    return jwt.sign(payload, jwtSecrets, options)
 }
