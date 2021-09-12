@@ -24,7 +24,7 @@ const checkUsername = async (req, res, next) =>{
     if(!userExisits.length){
         next()
     }else{
-        next({status: 401, message: 'username taken'})
+        res.status(401).json({ message: 'username taken'})
     }
     }catch(err){
         next(err)
@@ -37,7 +37,7 @@ const checkLogin = async (req, res, next) =>{
         const user = await Users.findUser(req.body.username)
         const password = await Users.pwValidation(req.body.password)
         if (!user || !password){
-            next({ status: 400, message: 'invalid credentials' })
+            res.status(400).json({message: 'invalid credentials' }) 
         } else{
             next()
         }
