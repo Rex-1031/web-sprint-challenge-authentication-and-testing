@@ -36,7 +36,7 @@ router.post('/login', checkPayload, checkLogin, (req, res, next) => {
           token
         })
       } else {
-        next({ status:401, message: 'invalid credentials' })
+        res.status(401).json({message: 'invalid credentials'})  
       }
     })
     .catch(next)
